@@ -1,0 +1,112 @@
+@import "tailwindcss";
+
+/* =========================================
+   1. COLOR PALETTES (The Data Layer)
+   ========================================= */
+
+/* Default Theme: Light Mode */
+:root {
+  --bg-base: #F5F1E8;
+  --bg-surface: #FFFCF5;
+  --bg-elevated: #FFFFFF;
+  
+  --primary: #344E41;
+  --secondary: #849477;
+  --accent: #C49A54;
+  
+  --text-main: #302C26;
+  --text-muted: #898477;
+  
+  --border-main: #E5DED0;
+}
+
+/* Dark Mode Override */
+[data-theme="dark"] {
+  --bg-base: #211F1B;
+  --bg-surface: #2D2923;
+  --bg-elevated: #39332B;
+  
+  --primary: #A3B18A;
+  --secondary: #6A775F; /* Derived dark equivalent for secondary */
+  --accent: #D2AC70;
+  
+  --text-main: #EAE2D2;
+  --text-muted: #A49A89;
+  
+  --border-main: #494136;
+}
+
+/* =========================================
+   2. TAILWIND MAPPING
+   ========================================= */
+@theme {
+  --color-background: var(--bg-base);
+  --color-surface: var(--bg-surface);
+  --color-elevated: var(--bg-elevated);
+
+  --color-primary: var(--primary);
+  --color-secondary: var(--secondary);
+  --color-accent: var(--accent);
+
+  --color-text: var(--text-main);
+  --color-muted: var(--text-muted);
+
+  --color-border: var(--border-main);
+}
+
+/* =========================================
+   3. CUSTOM THEMED SCROLLBARS
+   ========================================= */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border-main);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-muted);
+}
+
+/* =========================================
+   4. VIEW TRANSITION ANIMATION
+   ========================================= */
+
+/* Disable default cross-fade */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+/* Animate the new theme coming in */
+::view-transition-new(root) {
+  animation: corner-reveal 1.0s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+/* Force the old theme to stay perfectly still under the new theme */
+::view-transition-old(root) {
+  z-index: -1;
+}
+
+/* The clip-path circle grows from the bottom-left (where the button is) */
+@keyframes corner-reveal {
+  0% {
+    clip-path: circle(0% at 0% 100%);
+  }
+  100% {
+    /* 150% ensures the circle grows large enough to cover the top-right corner */
+    clip-path: circle(150% at 0% 100%); 
+  }
+}
+
+body {
+  @apply bg-background text-text; 
+}
