@@ -26,7 +26,7 @@ export default function Layout() {
       </div>
 
       {isModalOpen && (
-        <TransactionModal onClose={() => setIsModalOpen(false)} />
+        <TransactionModal onClose={() => setIsModalOpen(false)} onSaved={() => window.location.reload()} />
       )}
     </div>
   );

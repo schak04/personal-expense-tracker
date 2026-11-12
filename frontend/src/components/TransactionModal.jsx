@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { X } from 'lucide-react';
+import { transactionService } from '../api/api';
 
-export default function TransactionModal({ onClose, transaction = null }) {
+export default function TransactionModal({ onClose, transaction = null, onSaved }) {
   const [formData, setFormData] = useState(
     transaction || {
       title: '',
@@ -12,17 +13,28 @@ export default function TransactionModal({ onClose, transaction = null }) {
       note: ''
     }
   );
+  const [error, setError] = useState('');
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Saving transaction:", formData);
-    // await transactionService.create(formData) or .update(id, formData)
-    onClose();
+    setError('');
+    try {
+      const payload = { ...formData, amount: Number(formData.amount) };
+      if (transaction && transaction.id) {
+        await transactionService.update(transaction.id, payload);
+      } else {
+        await transactionService.create(payload);
+      }
+      if (onSaved) onSaved();
+      onClose();
+    } catch (err) {
+      setError('Failed to save transaction.');
+    }
   };
 
   return (
     <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
-      <div className="bg-surface border border-border w-full max-w-md rounded-2xl shadow-xl overflow-hidden animate-in fade-in zoom-in-95 duration-200">
+      <div className="bg-surface border border-border w-full max-w-md rounded-2xl shadow-xl overflow-hidden">
         <div className="flex items-center justify-between p-5 border-b border-border bg-elevated">
           <h2 className="text-xl font-bold text-text">
             {transaction ? 'Edit Transaction' : 'New Transaction'}
@@ -33,6 +45,7 @@ export default function TransactionModal({ onClose, transaction = null }) {
         </div>
 
         <form onSubmit={handleSubmit} className="p-5 space-y-4">
+          {error && <p className="text-sm text-rose-500">{error}</p>}
           <div className="grid grid-cols-2 gap-4">
             <button
               type="button"
@@ -76,6 +89,7 @@ export default function TransactionModal({ onClose, transaction = null }) {
               <input
                 type="number"
                 step="0.01"
+                min="0.01"
                 required
                 value={formData.amount}
                 onChange={(e) => setFormData({ ...formData, amount: e.target.value })}
@@ -109,6 +123,17 @@ export default function TransactionModal({ onClose, transaction = null }) {
               <option value="Transportation">Transportation</option>
               <option value="Income">Salary / Income</option>
             </select>
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-muted mb-1">Note</label>
+            <input
+              type="text"
+              value={formData.note || ''}
+              onChange={(e) => setFormData({ ...formData, note: e.target.value })}
+              className="w-full bg-background border border-border rounded-lg px-4 py-2.5 text-text focus:outline-none focus:border-primary"
+              placeholder="Optional note"
+            />
           </div>
 
           <div className="pt-4 flex gap-3">
