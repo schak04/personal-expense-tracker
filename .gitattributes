@@ -1,0 +1,3 @@
+backend/**/*.py linguist-detectable
+backend/**/*.py linguist-language=Python
+frontend/package-lock.json linguist-generated
