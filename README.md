@@ -90,6 +90,25 @@ erDiagram
 
 ---
 
+## Setup Guide (since this is a team project)
+
+1. Copy `.env.example` to `.env` in the project root and configure the values.
+2. Create and activate a Python virtual environment, then install backend dependencies:
+   - `cd backend`
+   - `python -m venv .venv`
+   - `.venv/bin/pip install -r requirements.txt`
+3. Run database migrations and start the backend:
+   - `.venv/bin/python manage.py migrate`
+   - `.venv/bin/python manage.py runserver`
+4. Start the frontend in a separate terminal:
+   - `cd frontend`
+   - `npm install`
+   - `npm run dev`
+
+The backend reads configuration from the root `.env` file. Set `MYSQL_*` variables to use MySQL; if `MYSQL_DATABASE` is not set, SQLite is used for local development.
+
+---
+
 ## Application Flow
 
 ```mermaid
