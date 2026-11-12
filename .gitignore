@@ -1,3 +1,6 @@
 .env
 *draft*
 node_modules
+*pycache*
+*.pyc
+db.sqlite3
