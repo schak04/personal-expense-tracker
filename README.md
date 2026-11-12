@@ -6,9 +6,9 @@ A web application designed to track and manage personal expenses, inspired by SI
 
 ## Tech Stack
 
-- **Backend:** Django
-- **Frontend:** React
-- **Database Engine:** MySQL
+- **Backend:** Django, Django REST Framework, Simple JWT
+- **Frontend:** React (Vite)
+- **Database Engine:** MySQL (SQLite fallback for local development)
 
 ---
 
@@ -77,10 +77,12 @@ erDiagram
     TRANSACTION {
         bigint id PK
         bigint user_id FK
+        varchar title
         decimal amount
+        varchar type
         varchar category
         date date
-        varchar description
+        text note
         datetime created_at
         datetime updated_at
     }
@@ -97,13 +99,15 @@ sequenceDiagram
     participant Django as Django REST API
     participant DB as MySQL
 
-    User->>React: Submit transaction
+    User->>React: Login and submit transaction
+    React->>Django: POST /api/auth/login/
+    Django-->>React: JWT access and refresh tokens
     React->>Django: POST /api/transactions/
     Django->>Django: Authenticate and validate request
     Django->>DB: Save transaction
     DB-->>Django: Transaction saved
     Django-->>React: 201 Created
-    React->>Django: GET /api/summary/
+    React->>Django: GET /api/transactions/summary/
     Django->>DB: Aggregate user's expense data
     DB-->>Django: Summary statistics
     Django-->>React: JSON response
