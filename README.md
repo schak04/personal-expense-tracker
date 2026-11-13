@@ -96,10 +96,11 @@ erDiagram
 2. Create and activate a Python virtual environment, then install backend dependencies:
    - `cd backend`
    - `python -m venv .venv`
-   - `.venv/bin/pip install -r requirements.txt`
+   - `source .venv/bin/activate`
+   - `pip install -r requirements.txt`
 3. Run database migrations and start the backend:
-   - `.venv/bin/python manage.py migrate`
-   - `.venv/bin/python manage.py runserver`
+   - `python manage.py migrate`
+   - `python manage.py runserver`
 4. Start the frontend in a separate terminal:
    - `cd frontend`
    - `npm install`
