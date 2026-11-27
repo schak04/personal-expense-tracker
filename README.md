@@ -1,6 +1,6 @@
 # Ledger
 
-A simple web application designed to track and manage personal expenses, inspired by SIH26102. This is for a university Django assessment.
+A simple web application designed to track and manage personal expenses. This is for a university Django assessment.
 
 ---
 
