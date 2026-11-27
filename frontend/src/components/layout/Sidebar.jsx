@@ -7,9 +7,10 @@ import {
   Moon,
   Sun,
   X,
+  LogOut
 } from "lucide-react";
 
-export default function Sidebar({ isOpen, setIsOpen }) {
+export default function Sidebar({ isOpen, setIsOpen, onLogout }) {
   const [isDark, setIsDark] = useState(() => {
     const saved = localStorage.getItem("theme");
     if (saved) {
@@ -99,6 +100,13 @@ export default function Sidebar({ isOpen, setIsOpen }) {
           >
             {isDark ? <Sun size={20} /> : <Moon size={20} />}
             <span>{isDark ? "Light Mode" : "Dark Mode"}</span>
+          </button>
+          <button
+            onClick={onLogout}
+            className="flex items-center gap-3 w-full px-4 py-3 rounded-lg text-muted hover:bg-rose-500/10 hover:text-rose-500 transition-colors"
+          >
+            <LogOut size={20} />
+            <span>Logout</span>
           </button>
         </div>
       </aside>
