@@ -21,6 +21,7 @@ flowchart TB
     subgraph FE["Frontend - React + Vite"]
         APP["Application"]
         AUTH["Login / Register"]
+        LOGOUT["Logout"]
         DASH["Dashboard"]
         TRANS["Transaction Management"]
         CHART["Summary Cards and Charts"]
@@ -28,6 +29,7 @@ flowchart TB
         LIST["Transaction History and Filters"]
 
         APP --> AUTH
+        APP --> LOGOUT
         APP --> DASH
         APP --> TRANS
         DASH --> CHART
@@ -51,6 +53,7 @@ flowchart TB
     DB[("MySQL Database")]
 
     AUTH -->|"Register / Login"| URL
+    LOGOUT -->|"Clear access and refresh tokens, then return to login"| APP
     DASH -->|"Authenticated API requests"| URL
     TRANS -->|"Authenticated API requests"| URL
     AUTHM <-->|"Verify JWT"| MODEL
@@ -132,6 +135,9 @@ sequenceDiagram
     DB-->>Django: Summary statistics
     Django-->>React: JSON response
     React-->>User: Display updated dashboard
+    User->>React: Select logout
+    React->>React: Clear access and refresh tokens
+    React-->>User: Return to login page
 ```
 
 ---
