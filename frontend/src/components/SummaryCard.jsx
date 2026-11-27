@@ -9,7 +9,7 @@ export default function SummaryCard({ title, amount, icon: Icon, trend }) {
       </div>
       
       <div>
-        <h3 className="text-2xl font-bold text-text">${amount.toFixed(2)}</h3>
+        <h3 className="text-2xl font-bold text-text">₹{amount.toFixed(2)}</h3>
         {trend && (
           <p className="text-sm text-muted mt-1">
             <span className={trend > 0 ? "text-emerald-500" : "text-rose-500"}>
