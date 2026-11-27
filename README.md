@@ -120,7 +120,7 @@ sequenceDiagram
     actor User
     participant React
     participant Django as Django REST API
-    participant DB as MySQL
+    participant DB as SQLite used for development / MySQL support for production
 
     User->>React: Login and submit transaction
     React->>Django: POST /api/auth/login/
