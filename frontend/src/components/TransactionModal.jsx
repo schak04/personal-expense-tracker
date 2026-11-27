@@ -33,7 +33,7 @@ export default function TransactionModal({ onClose, transaction = null, onSaved 
   };
 
   return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
+    <div className="fixed inset-0 z-100 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
       <div className="bg-surface border border-border w-full max-w-md rounded-2xl shadow-xl overflow-hidden">
         <div className="flex items-center justify-between p-5 border-b border-border bg-elevated">
           <h2 className="text-xl font-bold text-text">

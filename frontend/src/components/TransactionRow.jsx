@@ -1,11 +1,11 @@
-import { Coffee, ShoppingBag, Home, Zap, DollarSign, HelpCircle } from 'lucide-react';
+import { Coffee, ShoppingBag, Home, Zap, IndianRupee, HelpCircle } from 'lucide-react';
 
 const categoryIcons = {
   food: Coffee,
   shopping: ShoppingBag,
   housing: Home,
   utilities: Zap,
-  income: DollarSign,
+  income: IndianRupee,
 };
 
 export default function TransactionRow({ transaction }) {
@@ -30,7 +30,7 @@ export default function TransactionRow({ transaction }) {
       
       <div className="text-right">
         <p className={`font-semibold ${isIncome ? 'text-emerald-500' : 'text-text'}`}>
-          {isIncome ? '+' : '-'}${Math.abs(transaction.amount).toFixed(2)}
+          {isIncome ? '+' : '-'}₹{Math.abs(transaction.amount).toFixed(2)}
         </p>
       </div>
     </div>
