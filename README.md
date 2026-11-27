@@ -118,26 +118,26 @@ The backend reads configuration from the root `.env` file. Set `MYSQL_*` variabl
 ```mermaid
 sequenceDiagram
     actor User
-    participant React
-    participant Django as Django REST API
-    participant DB as MySQL
+    participant Frontend
+    participant Backend
+    participant Database
 
-    User->>React: Login and submit transaction
-    React->>Django: POST /api/auth/login/
-    Django-->>React: JWT access and refresh tokens
-    React->>Django: POST /api/transactions/
-    Django->>Django: Authenticate and validate request
-    Django->>DB: Save transaction
-    DB-->>Django: Transaction saved
-    Django-->>React: 201 Created
-    React->>Django: GET /api/transactions/summary/
-    Django->>DB: Aggregate user's expense data
-    DB-->>Django: Summary statistics
-    Django-->>React: JSON response
-    React-->>User: Display updated dashboard
-    User->>React: Select logout
-    React->>React: Clear access and refresh tokens
-    React-->>User: Return to login page
+    User->>Frontend: Login and submit transaction
+    Frontend->>Backend: POST /api/auth/login/
+    Backend-->>Frontend: JWT access and refresh tokens
+    Frontend->>Backend: POST /api/transactions/
+    Backend->>Backend: Authenticate and validate request
+    Backend->>Database: Save transaction
+    Database-->>Backend: Transaction saved
+    Backend-->>Frontend: 201 Created
+    Frontend->>Backend: GET /api/transactions/summary/
+    Backend->>Database: Aggregate user's expense data
+    Database-->>Backend: Summary statistics
+    Backend-->>Frontend: JSON response
+    Frontend-->>User: Display updated dashboard
+    User->>Frontend: Select logout
+    Frontend->>Frontend: Clear access and refresh tokens
+    Frontend-->>User: Return to login page
 ```
 
 ---
