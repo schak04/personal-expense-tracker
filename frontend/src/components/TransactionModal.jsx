@@ -28,7 +28,7 @@ export default function TransactionModal({ onClose, transaction = null, onSaved 
       if (onSaved) onSaved();
       onClose();
     } catch (err) {
-      setError('Failed to save transaction.');
+      setError(err.response?.data?.amount?.[0] || 'Failed to save transaction.');
     }
   };
 

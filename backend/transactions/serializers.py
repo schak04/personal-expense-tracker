@@ -1,4 +1,5 @@
 from django.contrib.auth.models import User
+from django.db.models import Sum
 from rest_framework import serializers
 from .models import Transaction
 
@@ -33,3 +34,18 @@ class TransactionSerializer(serializers.ModelSerializer):
         if value not in ('income', 'expense'):
             raise serializers.ValidationError('Type must be income or expense.')
         return value
+
+    def validate(self, attrs):
+        transaction_type = attrs.get('type', self.instance.type if self.instance else None)
+        if transaction_type == 'expense':
+            amount = attrs.get('amount', self.instance.amount if self.instance else None)
+            transactions = Transaction.objects.filter(user=self.context['request'].user)
+            if self.instance:
+                transactions = transactions.exclude(pk=self.instance.pk)
+
+            income = transactions.filter(type='income').aggregate(total=Sum('amount'))['total'] or 0
+            expenses = transactions.filter(type='expense').aggregate(total=Sum('amount'))['total'] or 0
+            if amount > income - expenses:
+                raise serializers.ValidationError({'amount': 'Expense exceeds the available balance.'})
+
+        return attrs
